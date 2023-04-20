@@ -16,7 +16,7 @@ python befunger.py filename
 ```
 We recommend trying the number guessing game *more_or_less.bf*.
 
-You can watch the code as it is being executed by further specifying a float *step-size*. If you do, **befunger** will pause for *step-size* seconds between consecutive steps. For example, to run *more_or_less.bf* with a delay *0.05* seconds per step, run:
+You can watch the code as it is being executed by further specifying a float *step-size*. If you do, **befunger** will pause for *step-size* seconds between consecutive steps. For example, to run *more_or_less.bf* with a delay of *0.05* seconds per step, run:
 ```shell
 python befunger.py more_or_less.bf 0.05
 ```

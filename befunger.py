@@ -221,7 +221,7 @@ def code_array_from_file(filename: str) -> List[List[chr]]:
     return [row + [' '] * (max_len - len(row)) for row in unpadded_code_array]
 
 
-def execute(filename: str = "less_or_more.bf",
+def execute(filename: str = "more_or_less.bf",
             step_size: float = -1):
     step_size = float(step_size)
     code_array = code_array_from_file(filename)
