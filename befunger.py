@@ -32,18 +32,17 @@ def pretty_print(arr: List[List[chr]], cursor_pos: Tuple[int] = (0, 0)):
     y = cursor_pos[1]
     for idx, row in enumerate(arr):
         if idx != y:
-            print(*row, sep=' ')
+            print(*row, sep="")
         else:
             if x > 0:
-                print(*row[:x], sep=' ', end=' ')
-            print("\x1b[103m"+row[x]+"\x1b[0m", end=' ')
-            if x < len(row)-1:
-                print(*row[x+1:], sep=' ', end='')
+                print(*row[:x], sep="", end="")
+            print("\x1b[103m" + row[x] + "\x1b[0m", end="")
+            if x < len(row) - 1:
+                print(*row[x + 1 :], sep="", end="")
             print()
 
 
-def interpret(code: List[List[chr]],
-              step_time: float = 0):
+def interpret(code: List[List[chr]], step_time: float = 0):
     height = len(code)
     width = len(code[0])
     PC_x = 0
@@ -66,7 +65,7 @@ def interpret(code: List[List[chr]],
 
     running = True
     string_mode = False
-    visual = (step_time > 0)
+    visual = step_time > 0
 
     if visual:
         pretty_print(code, (PC_x, PC_y))
@@ -75,7 +74,6 @@ def interpret(code: List[List[chr]],
         sleep(step_time)
 
     while running:
-
         c = code[PC_y][PC_x]
         is_on_bridge = False
 
@@ -83,19 +81,19 @@ def interpret(code: List[List[chr]],
             if c == "+":
                 a = PC_stack.pop()
                 b = PC_stack.pop()
-                PC_stack.append(a+b)
+                PC_stack.append(a + b)
             elif c == "-":
                 a = PC_stack.pop()
                 b = PC_stack.pop()
-                PC_stack.append(b-a)
+                PC_stack.append(b - a)
             elif c == "*":
                 a = PC_stack.pop()
                 b = PC_stack.pop()
-                PC_stack.append(a*b)
+                PC_stack.append(a * b)
             elif c == "/":
                 a = PC_stack.pop()
                 b = PC_stack.pop()
-                PC_stack.append(b//a)
+                PC_stack.append(b // a)
             elif c == "%":
                 a = PC_stack.pop()
                 b = PC_stack.pop()
@@ -115,7 +113,7 @@ def interpret(code: List[List[chr]],
             elif c in direction_string:
                 PC_dir = directions[direction_string.find(c)]
             elif c == "?":
-                rand = randint(0, len(directions)-1)
+                rand = randint(0, len(directions) - 1)
                 PC_dir = directions[rand]
             elif c == "_":
                 if PC_stack.pop():
@@ -127,7 +125,7 @@ def interpret(code: List[List[chr]],
                     PC_dir = UP
                 else:
                     PC_dir = DOWN
-            elif c == "\"":
+            elif c == '"':
                 string_mode = True
             elif c == ":":
                 a = PC_stack.pop()
@@ -179,7 +177,7 @@ def interpret(code: List[List[chr]],
                     PC_stack.append(number)
 
         else:  # string_mode == True
-            if c == "\"":
+            if c == '"':
                 string_mode = False
             else:
                 PC_stack.append(ord(c))  # add value to stack as ASCII
@@ -211,6 +209,7 @@ def interpret(code: List[List[chr]],
 
         if visual:
             sleep(step_time)
+    return output
 
 
 def code_array_from_file(filename: str) -> List[List[chr]]:
@@ -218,11 +217,10 @@ def code_array_from_file(filename: str) -> List[List[chr]]:
         string = code_file.read()
     unpadded_code_array = [list(s) for s in string.splitlines()]
     max_len = max([len(row) for row in unpadded_code_array])
-    return [row + [' '] * (max_len - len(row)) for row in unpadded_code_array]
+    return [row + [" "] * (max_len - len(row)) for row in unpadded_code_array]
 
 
-def execute(filename: str = "more_or_less.bf",
-            step_size: float = -1):
+def execute(filename: str = "more_or_less.bf", step_size: float = -1):
     step_size = float(step_size)
     code_array = code_array_from_file(filename)
     clear_screen()
@@ -233,4 +231,4 @@ def execute(filename: str = "more_or_less.bf",
 
 
 if __name__ == "__main__":
-    execute(*sys.argv[1:min(3, len(sys.argv))])
+    execute(*sys.argv[1 : min(3, len(sys.argv))])
